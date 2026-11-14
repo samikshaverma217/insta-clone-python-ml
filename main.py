@@ -5,7 +5,7 @@ import random
 st.set_page_config(page_title="InstaClone ML", layout="wide")
 st.markdown("<h1 style='text-align:center'>📸 InstaClone + ML</h1>", unsafe_allow_html=True)
 
-# --- Top Tabs - Yahi feel layega ---
+# --- Top Tabs ---
 tab1, tab2 = st.tabs(["📸 Feed / Photos", "🎬 Reels / Videos"])
 
 with tab1:
@@ -21,11 +21,11 @@ with tab1:
 with tab2:
     st.subheader("🎬 Reels - Scroll karke dekho")
     st.write("**@travel_diaries** - Beach Reels 🏖️")
-    st.video("https://cdn.coverr.co/videos/coverr-waves-coming-to-the-shore-1564/1080p.mp4")
+    st.video("https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
     st.write("❤️ 5.2K | 💬 340 comments")
     st.write("---")
     st.write("**@fit_life** - Gym Reels 💪")
-    st.video("https://cdn.coverr.co/videos/coverr-working-out-with-dumbbells-1580/1080p.mp4")
+    st.video("https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4")
     st.write("❤️ 8.1K | 💬 512 comments")
 
 # --- ML Parts Neeche ---
