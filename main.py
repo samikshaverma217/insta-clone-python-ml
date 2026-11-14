@@ -1,44 +1,52 @@
 import streamlit as st
-import pandas as pd
 import random
 
-st.set_page_config(page_title="InstaClone ML", layout="wide")
-st.markdown("<h1 style='text-align:center'>📸 InstaClone + ML</h1>", unsafe_allow_html=True)
+st.set_page_config(page_title="InstaClone + API", layout="wide")
+st.markdown("<h1 style='text-align:center'>📸 InstaClone - Search Reels</h1>", unsafe_allow_html=True)
 
-# --- Top Tabs ---
-tab1, tab2 = st.tabs(["📸 Feed / Photos", "🎬 Reels / Videos"])
+# Bina API Key ke - Real Pexels Videos ka Database
+VIDEOS = {
+    "travel": [
+        "https://videos.pexels.com/video-files/2169880/2169880-hd_1920_1080_30fps.mp4",
+        "https://videos.pexels.com/video-files/3571264/3571264-hd_1920_1080_30fps.mp4",
+    ],
+    "cat": [
+        "https://videos.pexels.com/video-files/3195394/3195394-hd_1920_1080_25fps.mp4",
+        "https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_30fps.mp4",
+    ],
+    "gym": [
+        "https://videos.pexels.com/video-files/4754030/4754030-hd_1920_1080_25fps.mp4",
+        "https://videos.pexels.com/video-files/4165422/4165422-hd_1920_1080_25fps.mp4",
+    ],
+    "beach": [
+        "https://videos.pexels.com/video-files/1093662/1093662-hd_1920_1080_30fps.mp4",
+        "https://videos.pexels.com/video-files/1409899/1409899-hd_1920_1080_25fps.mp4",
+    ],
+    "food": [
+        "https://videos.pexels.com/video-files/3298762/3298762-hd_1920_1080_25fps.mp4",
+        "https://videos.pexels.com/video-files/3298761/3298761-hd_1920_1080_25fps.mp4",
+    ]
+}
 
-with tab1:
-    st.subheader("✨ ML Recommended For You")
-    st.write("**travel_diaries** - Travel - ML Score: 95% Match")
-    st.image("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600", width=400)
-    st.write("❤️ 1250 likes | Mountains calling!")
-    st.write("---")
-    st.write("**foodie_girl** - Food - ML Score: 92% Match")
-    st.image("https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600", width=400)
-    st.write("❤️ 890 likes | Best Pizza Ever!")
+search = st.text_input("🔍 Search karo - travel, cat, gym, beach, food", "travel").lower().strip()
 
-with tab2:
-    st.subheader("🎬 Reels - Scroll karke dekho")
-    st.write("**@travel_diaries** - Beach Reels 🏖️")
-    st.video("https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
-    st.write("❤️ 5.2K | 💬 340 comments")
-    st.write("---")
-    st.write("**@fit_life** - Gym Reels 💪")
-    st.video("https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4")
-    st.write("❤️ 8.1K | 💬 512 comments")
+if search in VIDEOS:
+    st.success(f"Showing Reels for: {search}")
+    for i, link in enumerate(VIDEOS[search]):
+        st.write(f"**@creator_{search}_{i+1}** - #{search} #viral #reels")
+        st.video(link)
+        st.write("❤️ 5.2K | 💬 340 comments")
+        st.write("---")
+else:
+    st.warning("Is word ke liye video nahi hai, try karo: travel, cat, gym, beach, food")
+    st.write("Niche wale sab videos dekh lo:")
+    for k, links in VIDEOS.items():
+        st.video(links[0])
 
-# --- ML Parts Neeche ---
 st.subheader("🤖 ML: Spam Comment Detector")
-comment = st.text_input("Comment likho, jaise 'free followers link'")
+comment = st.text_input("Comment likho")
 if comment:
-    spam_words = ["free", "followers", "link", "click", "win", "money", "http"]
-    if any(w in comment.lower() for w in spam_words):
-        st.error("🚨 ML Result: SPAM COMMENT")
+    if any(w in comment.lower() for w in ["free", "link", "followers", "click"]):
+        st.error("🚨 ML Result: SPAM")
     else:
-        st.success("✅ ML Result: SAFE COMMENT")
-
-st.subheader("🏷️ ML: Hashtag Suggester")
-cat2 = st.selectbox("Photo kis cheez ki hai?", ["Travel", "Food", "Fitness", "Tech", "Fashion"])
-if st.button("Hashtag Generate Karo"):
-    st.info(f"#{cat2.lower()} #viral #trending #explorepage #instagood")
+        st.success("✅ ML Result: SAFE")
